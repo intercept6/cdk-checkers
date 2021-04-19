@@ -2,6 +2,9 @@ name: cdk
 
 on:
   push:
+    branches:
+      - master
+      - gha/**
   pull_request:
 
 jobs:
