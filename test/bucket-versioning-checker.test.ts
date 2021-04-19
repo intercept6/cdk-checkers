@@ -1,3 +1,4 @@
+import '@aws-cdk/assert/jest';
 import {BucketVersioningChecker} from '../lib';
 import {SynthUtils} from '@aws-cdk/assert';
 import {Bucket} from '@aws-cdk/aws-s3';
@@ -24,6 +25,19 @@ describe('bucket versioning', () => {
     assembly.messages.forEach(value => {
       expect(value.entry.type).toEqual('aws:cdk:error');
       expect(value.entry.data).toEqual('Bucket versioning is no enabled');
+    });
+  });
+
+  test('fix to force versioning', () => {
+    const app = new App();
+    const stack = new Stack(app, 'test-stack');
+    new Bucket(stack, 'bucket', {versioned: false});
+
+    Aspects.of(stack).add(new BucketVersioningChecker({fix: true}));
+    expect(stack).toHaveResource('AWS::S3::Bucket', {
+      VersioningConfiguration: {
+        Status: 'Enabled',
+      },
     });
   });
 });

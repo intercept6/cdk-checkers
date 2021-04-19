@@ -18,6 +18,8 @@ yarn add -D  cdk-checkers
 
 ## Example
 
+### Test
+
 In test
 
 ```typescript
@@ -56,4 +58,24 @@ const cdkAspectDemoStack = new CdkAspectDemo.CdkAspectDemoStack(
 );
 
 cdk.Aspects.of(cdkAspectDemoStack).add(new checkers.BucketVersioningChecker());
+```
+
+### Fix CloudFormation Template with a checker
+
+```typescript
+#!/usr/bin/env node
+import 'source-map-support/register';
+import * as cdk from '@aws-cdk/core';
+import * as CdkAspectDemo from '../lib/cdk-aspect-demo-stack';
+import * as checkers from 'cdk-checkers';
+
+const app = new cdk.App();
+const cdkAspectDemoStack = new CdkAspectDemo.CdkAspectDemoStack(
+  app,
+  'CdkAspectDemoStack'
+);
+
+cdk.Aspects.of(cdkAspectDemoStack).add(
+  new checkers.BucketVersioningChecker({fix: true})
+);
 ```
