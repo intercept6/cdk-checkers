@@ -29,6 +29,6 @@
   },
   "dependencies": {
     "@aws-cdk/core": "1.126.0",
-    "npm": "^7.10.0"
+    "npm": "^8.0.0"
   }
 }
