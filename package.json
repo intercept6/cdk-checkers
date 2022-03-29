@@ -15,7 +15,7 @@
     "posttest": "npm run lint"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.150.0",
+    "@aws-cdk/assert": "2.18.0",
     "@aws-cdk/aws-s3": "1.150.0",
     "@types/jest": "27.4.1",
     "@types/node": "16.11.26",
