@@ -1,5 +1,6 @@
-import {CfnBucket} from '@aws-cdk/aws-s3';
-import {Annotations, IAspect, IConstruct, Tokenization} from '@aws-cdk/core';
+import {CfnBucket} from 'aws-cdk-lib/aws-s3';
+import {Annotations, IAspect, Tokenization} from 'aws-cdk-lib';
+import {IConstruct} from 'constructs';
 
 /**
  * Verify that the S3 bucket configures for versioning.

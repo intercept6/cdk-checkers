@@ -1,8 +1,7 @@
-import '@aws-cdk/assert/jest';
 import {BucketVersioningChecker} from '../lib';
-import {SynthUtils} from '@aws-cdk/assert';
-import {Bucket} from '@aws-cdk/aws-s3';
-import {Aspects, App, Stack} from '@aws-cdk/core';
+import {Template} from 'aws-cdk-lib/assertions';
+import {Bucket} from 'aws-cdk-lib/aws-s3';
+import {Aspects, App, Stack} from 'aws-cdk-lib';
 
 describe('bucket versioning', () => {
   test('no error, if versioning is enable', () => {
@@ -11,8 +10,11 @@ describe('bucket versioning', () => {
     new Bucket(stack, 'bucket', {versioned: true});
 
     Aspects.of(stack).add(new BucketVersioningChecker());
-    const assembly = SynthUtils.synthesize(stack);
-    expect(assembly.messages).toHaveLength(0);
+
+    const assembly = app.synth();
+    const {messages} = assembly.getStackArtifact(stack.artifactId);
+
+    expect(messages).toHaveLength(0);
   });
 
   test('raise error, if versioning is disable', () => {
@@ -21,11 +23,13 @@ describe('bucket versioning', () => {
     new Bucket(stack, 'bucket', {versioned: false});
 
     Aspects.of(stack).add(new BucketVersioningChecker());
-    const assembly = SynthUtils.synthesize(stack);
-    assembly.messages.forEach(value => {
-      expect(value.entry.type).toEqual('aws:cdk:error');
-      expect(value.entry.data).toEqual('Bucket versioning is no enabled');
-    });
+
+    const assembly = app.synth();
+    const {messages} = assembly.getStackArtifact(stack.artifactId);
+
+    expect(messages).toHaveLength(1);
+    expect(messages[0].entry.type).toEqual('aws:cdk:error');
+    expect(messages[0].entry.data).toEqual('Bucket versioning is no enabled');
   });
 
   test('fix to force versioning', () => {
@@ -34,9 +38,21 @@ describe('bucket versioning', () => {
     new Bucket(stack, 'bucket', {versioned: false});
 
     Aspects.of(stack).add(new BucketVersioningChecker({fix: true}));
-    expect(stack).toHaveResource('AWS::S3::Bucket', {
-      VersioningConfiguration: {
-        Status: 'Enabled',
+
+    const assembly = app.synth();
+    const {messages} = assembly.getStackArtifact(stack.artifactId);
+
+    expect(messages).toHaveLength(0);
+
+    const template = Template.fromStack(stack);
+    template.hasResource('AWS::S3::Bucket', {
+      Type: 'AWS::S3::Bucket',
+      UpdateReplacePolicy: 'Retain',
+      DeletionPolicy: 'Retain',
+      Properties: {
+        VersioningConfiguration: {
+          Status: 'Enabled',
+        },
       },
     });
   });
