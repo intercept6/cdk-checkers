@@ -33,12 +33,13 @@ test('aspects test', () => {
   const stack = new CdkAspectDemo.CdkAspectDemoStack(app, 'test-stack');
 
   cdk.Aspects.of(stack).add(new checkers.BucketVersioningChecker());
-  const assembly = assert.SynthUtils.synthesize(stack);
-  assembly.messages.forEach(message => {
-    expect(message).toEqual(
-      expect.objectContaining({entry: {type: 'aws:cdk:error'}})
-    );
-  });
+
+  const assembly = app.synth();
+  const {messages} = assembly.getStackArtifact(stack.artifactId);
+
+  expect(messages).toHaveLength(1);
+  expect(messages[0].entry.type).toEqual('aws:cdk:error');
+  expect(messages[0].entry.data).toEqual('Bucket versioning is no enabled');
 });
 ```
 
