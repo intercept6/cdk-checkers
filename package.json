@@ -15,7 +15,7 @@
     "posttest": "npm run lint"
   },
   "devDependencies": {
-    "@types/jest": "28.1.3",
+    "@types/jest": "28.1.4",
     "@types/node": "16.11.42",
     "gts": "3.1.0",
     "jest": "28.1.2",
