@@ -20,11 +20,11 @@
     "gts": "3.1.1",
     "jest": "29.3.1",
     "ts-jest": "29.0.3",
-    "aws-cdk": "2.56.0",
+    "aws-cdk": "2.56.1",
     "typescript": "4.9.4"
   },
   "peerDependencies": {
-    "@aws-cdk/core": "1.184.0"
+    "@aws-cdk/core": "1.184.1"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.18.0",
