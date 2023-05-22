@@ -24,7 +24,7 @@
     "typescript": "5.0.4"
   },
   "peerDependencies": {
-    "@aws-cdk/core": "1.201.0"
+    "@aws-cdk/core": "1.202.0"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.18.0",
