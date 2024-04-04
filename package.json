@@ -29,7 +29,7 @@
   "dependencies": {
     "aws-cdk-lib": "^2.18.0",
     "constructs": "^10.0.9",
-    "npm": "^9.0.0",
+    "npm": "^10.0.0",
     "source-map-support": "^0.5.21"
   }
 }
