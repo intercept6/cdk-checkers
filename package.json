@@ -21,7 +21,7 @@
     "jest": "29.7.0",
     "ts-jest": "29.3.1",
     "aws-cdk": "2.1007.0",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "peerDependencies": {
     "@aws-cdk/core": "1.204.0"
